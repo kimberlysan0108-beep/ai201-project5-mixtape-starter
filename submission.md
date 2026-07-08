@@ -5,7 +5,7 @@ I utilized an AI collaborator to assist with codebase onboarding by generating h
 
 ---
 
-## 🗺️ Codebase Map
+## Codebase Map
 
 ### Core Architecture
 The Mixtape codebase follows a clean **Separation of Concerns (SoC)** design pattern split into three distinct layers:
@@ -28,7 +28,7 @@ When a user adds a song to a playlist via `POST /playlists/<playlist_id>/songs`:
 
 ---
 
-## 🔍 Root Cause Analysis & Fixes
+## Root Cause Analysis & Fixes
 
 ### Issue #1 — My listening streak keeps resetting
 *   **How you reproduced it:** Looked at Kenji's user report detailing that streaks dropped back to 1 exclusively on Sunday mornings despite consecutive daily listening. Traced the calculation logic under `services/streak_service.py`.
