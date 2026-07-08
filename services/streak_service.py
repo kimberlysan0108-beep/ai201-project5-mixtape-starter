@@ -67,10 +67,10 @@ def update_listening_streak(user: User, now: datetime) -> None:
     last_date = last_listened.date()
     days_since_last = (today - last_date).days
 
-    if days_since_last == 0:
+  if days_since_last == 0:
         # Already updated today — no change needed
         return
-   elif days_since_last == 1:
+   elif days_since_last == 1: 
         user.listening_streak += 1
     else:
         user.listening_streak = 1
