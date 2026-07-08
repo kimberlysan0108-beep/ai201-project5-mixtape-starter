@@ -25,3 +25,13 @@ When a user adds a song to a playlist via `POST /playlists/<playlist_id>/songs`:
 1. The request hits the route handler, which extracts the `song_id`.
 2. The route controller instantly delegates the operation by calling `playlist_service.add_song_to_playlist()`.
 3. The service queries the current song count to increment the order property, commits the new record to the database, and then safely returns the response back to the route.
+
+---
+
+## Root Cause Analysis & Fixes
+
+### Issue #1 — My listening streak keeps resetting
+*   **How you reproduced it:** Looked at Kenji's user report detailing that streaks dropped back to 1 exclusively on Sunday mornings despite consecutive daily listening. Traced the calculation logic under `services/streak_service.py`.
+*   **How you found the root cause:** Navigated to `services/streak_service.py` and inspected the `update_listening_streak` function. Found a conditional check appending `and today.weekday() != 6` onto a valid consecutive day validation.
+*   **The root cause:** In Python, `datetime.weekday()` returns `6` for Sunday. Because of the hardcoded `and today.weekday() != 6` check, when a user listened on Sunday after listening on Saturday (`days_since_last == 1`), the condition evaluated to `False`. This bypassed the streak increment and dropped straight into the `else` block, which reset the user's streak to `1`.
+*   **Your fix and side-effect check:** Removed the restrictive `and today.weekday() != 6` clause entirely, changing the condition to `elif days_since_last == 1:`. This ensures streaks increment on every consecutive calendar day. Verified that weekday activities (Monday-Saturday) are completely untouched and continue to calculate sequentially.
