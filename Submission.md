@@ -5,7 +5,7 @@ I utilized an AI collaborator to assist with codebase onboarding by generating h
 
 ---
 
-## 🗺️ Codebase Map
+## Codebase Map
 
 ### Core Architecture
 The Mixtape codebase follows a clean **Separation of Concerns (SoC)** design pattern split into three distinct layers:
